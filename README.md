@@ -1,3 +1,3 @@
-# Triangles Effect
+# You need to have [gosumemory](https://github.com/l3lackShark/gosumemory/runs/1379916217) running
 
-An osu-like triangles effect, draw on canvas. Sample in [index.html](index.html).
+[Example](https://cdn.discordapp.com/attachments/731854916934565953/775511235436216360/triangles.mp4) 
