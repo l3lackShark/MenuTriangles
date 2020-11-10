@@ -2,8 +2,9 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Triangle</title>
-    <script src="out/Triangles.js"></script>
+    <title>MenuTriangles</title>
+    <script src="deps/reconnecting-websocket.min.js"></script>
+    <script src="index.js"></script>
     <style>
         body {
             position: fixed;
@@ -21,7 +22,6 @@
     </style>
 </head>
 <body class="bg-triangle">
-    <h1>Triangles Effect</h1>
     <p></p>
 </body>
 <script>
@@ -45,6 +45,6 @@
     canvas.height = document.body.clientHeight;
   });
 new Triangles(canvas,"");
-  const triangles = new Triangles(canvas, "#e7659f", 150);
+  const triangles = new Triangles(canvas, "#555fd4", 400);
 </script>
 </html>

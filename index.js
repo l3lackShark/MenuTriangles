@@ -1,3 +1,14 @@
+let socket = new ReconnectingWebSocket("ws://127.0.0.1:24050/ws");
+
+socket.onopen = () => console.log("Successfully Connected");
+socket.onclose = event => console.log("Socket Closed Connection: ", event);
+socket.onerror = error => console.log("Socket Error: ", error);
+let bassDensity = 0
+
+socket.onmessage = event => {
+    let data = JSON.parse(event.data);
+    bassDensity = data.menu.mainMenu.bassDensity/180
+}
 const Triangles = (function () {
     function randomNum(minNum, maxNum) {
         return parseInt((Math.random() * (maxNum - minNum + 1) + minNum).toString(), 10);
@@ -112,16 +123,16 @@ const Triangles = (function () {
                     this.triangleList.splice(index, 1);
                     this.triangleList.push(this.createTriangle(true));
                 }
-                el.y -= el.height * .001;
+                el.y -= el.height * bassDensity
             });
         }
         createTriangle(isFromStart = false) {
-            let tWidth = randomNum(this.context.canvas.width * .03, this.context.canvas.width * .25);
+            let tWidth = randomNum(this.context.canvas.width * .20, this.context.canvas.width * .03);
             let tHeight = (Math.sqrt(3) / 2) * tWidth;
-            return new Triangle(this.getRandomColor(), tWidth, tHeight, randomNum(0 - (tWidth * .5), this.context.canvas.width + (tWidth * .5)), isFromStart ? this.context.canvas.height : randomNum(0 - tHeight, this.context.canvas.height + tHeight));
+            return new Triangle(this.getRandomColor(), tWidth, tHeight, randomNum(0 - (tWidth), this.context.canvas.width + (tWidth)), isFromStart ? this.context.canvas.height : randomNum(0 - tHeight, this.context.canvas.height + tHeight));
         }
         getRandomColor() {
-            const wave = .05;
+            const wave = .1;
             let minLight = this.baseColor["l"] - wave;
             if (minLight < 0)
                 minLight = 0;
@@ -129,8 +140,14 @@ const Triangles = (function () {
             if (maxLight > 1)
                 maxLight = 1;
             let randomLight = randomNum(minLight * 100, maxLight * 100) / 100;
-            return `hsl(${this.baseColor["h"]}, ${this.baseColor["s"] * 100}%, ${randomLight * 100}%)`;
+            let color1 = this.baseColor["h"] - 40;
+            if (color1 < 0)
+                color1 = 0;
+            let color2 = this.baseColor["h"] + 40;
+            if (color2 > 300)
+                color2 = 300;
+            let randomcolor = randomNum(color1, color2)
+            return `hsl(${randomcolor}, ${this.baseColor["s"] * 100}%, ${randomLight * 100}%)`;
         }
     };
 })();
-//# sourceMappingURL=Triangles.js.map
