@@ -4,10 +4,26 @@ socket.onopen = () => console.log("Successfully Connected");
 socket.onclose = event => console.log("Socket Closed Connection: ", event);
 socket.onerror = error => console.log("Socket Error: ", error);
 let bassDensity = 0
+let tempState;
+
 
 socket.onmessage = event => {
     let data = JSON.parse(event.data);
-    bassDensity = data.menu.mainMenu.bassDensity/180
+    if (tempState != data.menu.state){
+        if(data.menu.state == 0){
+            bassDensity = data.menu.mainMenu.bassDensity/30
+            main.style.opacity = 1;
+            setTimeout(() => {
+                bassDensity = data.menu.mainMenu.bassDensity/180
+            }, 800);
+        }else{
+            bassDensity = data.menu.mainMenu.bassDensity/30
+            setTimeout(() => {
+               main.style.opacity = 0; 
+            }, 1000);
+        }
+        tempState = data.menu.state
+    }
 }
 const Triangles = (function () {
     function randomNum(minNum, maxNum) {

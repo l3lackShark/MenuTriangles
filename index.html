@@ -21,7 +21,7 @@
         }
     </style>
 </head>
-<body class="bg-triangle">
+<body class="bg-triangle" id='main' style="transition: 500ms">
     <p></p>
 </body>
 <script>
@@ -32,7 +32,6 @@
   canvas.width = document.body.clientWidth;
   canvas.height = document.body.clientHeight;
   canvas.style.zIndex = "-1";
-  document.body.style.backgroundColor = "transparent";
 
   if (document.body.childElementCount > 0) {
     document.body.insertBefore(canvas, document.body.childNodes[0]);
