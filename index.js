@@ -10,19 +10,37 @@ let tempState;
 socket.onmessage = event => {
     let data = JSON.parse(event.data);
     if (tempState != data.menu.state){
+        didChange = true
         if(data.menu.state == 0){
-            bassDensity = data.menu.mainMenu.bassDensity/30
+            bassDensity = 3.5/30
             main.style.opacity = 1;
-            setTimeout(() => {
-                bassDensity = data.menu.mainMenu.bassDensity/180
-            }, 800);
+            let oneStep = 6
+            for (let i = 1; i < 31; i++) {
+                setTimeout(() => {
+                    bassDensity = data.menu.mainMenu.bassDensity/(oneStep*i)
+                }, i*50);
+            }
+              bassDensity = data.menu.mainMenu.bassDensity/180
         }else{
-            bassDensity = data.menu.mainMenu.bassDensity/30
+            bassDensity = 3.5/30        
             setTimeout(() => {
-               main.style.opacity = 0; 
-            }, 1000);
-        }
+                main.style.opacity = 0; 
+            }, 500);
+        } 
         tempState = data.menu.state
+
+    } else {
+        if (tempState == 0) {
+            if (didChange) {
+                setTimeout(() => {
+                    bassDensity = data.menu.mainMenu.bassDensity/180
+                    didChange = false
+                }, 1500);
+            } else {
+                bassDensity = data.menu.mainMenu.bassDensity/180
+            }
+            
+        }
     }
 }
 const Triangles = (function () {
