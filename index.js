@@ -9,6 +9,13 @@ let tempState;
 
 socket.onmessage = event => {
     let data = JSON.parse(event.data);
+    if (data.menu.state == 22) {
+        if (data.tourney.manager.ipcState == 1) {
+            data.menu.state = 0
+        } else {
+            data.menu.state = 5
+        }
+    }
     if (tempState != data.menu.state){
         didChange = true
         if(data.menu.state == 0){
